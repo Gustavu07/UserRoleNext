@@ -1,26 +1,79 @@
+/* app/globals.css */
+
+/* 1. Importación de Fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+/* 2. Directivas de Tailwind CSS v4 y HeroUI */
 @import "tailwindcss";
+@plugin './hero.ts';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:where(.dark, .dark *));
 
+
+/* 3. Definición de Variables CSS (Tema Claro por Defecto) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colores Base */
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  --color-accent: #f59e0b;
+
+  /* Colores de Texto */
+  --text-color-default: #1f2937;
+  --text-color-light: #4b5563;
+  --text-color-muted: #6b7280;
+
+  /* Colores de Fondo */
+  --background-color-page: #ffffff;
+  --background-color-card: #ffffff;
+  --border-color-default: #e5e7eb;
+
+  /* Tipografías */
+  --font-sans: "Inter", system-ui, sans-serif;
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+/* 4. Definición de Variables CSS para el Modo Oscuro */
+/* Sobrescribe las variables del tema claro dentro del selector '.dark'. */
+/* Next.js/Tailwind aplicará la clase 'dark' al <html> cuando el modo oscuro esté activo. */
+.dark {
+  --color-primary: #60a5fa;
+  --color-secondary: #a78bfa;
+  --color-accent: #fbbf24;
+
+  --text-color-default: #f9fafb;
+  --text-color-light: #e5e7eb;
+  --text-color-muted: #d1d5db;
+
+  --background-color-page: #0D1117;
+  --background-color-card: #374151;
+  --border-color-default: #4b5563;
+
+  /* Tipografías */
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
+/* 5. Estilos Base (Aplicar Tipografías y Colores Globales) */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background-color-page);
+  color: var(--text-color-default);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sans);
+  color: var(--text-color-default);
+}
+
+/* 6. Estilos personalizados */
+.my-card {
+  background-color: var(--background-color-card);
+  border: 1px solid var(--border-color-default);
 }
