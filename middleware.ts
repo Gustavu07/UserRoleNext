@@ -21,20 +21,40 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // Obtener usuario autenticado
+  // 🔐 Obtener usuario autenticado
   const { data, error } = await supabase.auth.getUser();
   const user = data.user;
 
-
-  // 🔹 Redirigir a /login si el usuario no está autenticado y quiere entrar a "/"
   if (!user && request.nextUrl.pathname !== "/login") {
     return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (user) {
+    const { data: profile, error: profileError } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    const pathname = request.nextUrl.pathname;
+
+    // Redirección basada en el rol
+    if (profile) {
+      const role = profile.role;
+
+      if (role === "superadmin" && !pathname.startsWith("/admin")) {
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
+
+      if (role === "almacen" && !pathname.startsWith("/almacen")) {
+        return NextResponse.redirect(new URL("/almacen", request.url));
+      }
+    }
   }
 
   return response;
 }
 
-// 🔹 Aplicar middleware a todas las rutas menos archivos estáticos e imágenes
 export const config = {
   matcher: [
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$|api/).*)",

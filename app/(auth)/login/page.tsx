@@ -27,7 +27,7 @@ export default function LoginPage() {
             <p className="text-sm text-gray-500 text-center">Ingresa tus credenciales para continuar</p>
           </div>
 
-          <form action={logInAction} method="POST" className="space-y-4">
+          <form action={logInAction} className="space-y-4">
             <div>
               <label htmlFor="username" className="text-sm font-medium text-gray-700 block mb-1">
                 Email
@@ -83,12 +83,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-blue-600" />
-                Recordarme
-              </label>
-            </div>
 
             {/* Botón Login */}
             <button

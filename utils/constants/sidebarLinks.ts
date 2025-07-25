@@ -40,6 +40,15 @@ export const sidebarNavigation: NavSection[] = [
     items: [{ href: "/", label: "Dashboard", icon: ChartBarIcon }],
   },
   {
+    title: "Table Administration",
+    items: [{ href: "/admin", label: "Dashboard", icon: ChartBarIcon }],
+  },
+  {
+    title: "Inventory",
+    items: [{ href: "/almacen", label: "Dashboard", icon: ChartBarIcon }],
+  },
+
+  {
     title: "Sesión",
     items: [
       {
