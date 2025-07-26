@@ -1,41 +1,35 @@
-'use client';
-
 import './globals.css';
-import { usePathname } from 'next/navigation';
 import { Sidebar, SidebarProvider } from '@/components';
+import { getUserWithProfile } from "@/lib/auth";
 import { Providers } from './providers';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
-  // Excluir página de login
-  if (pathname === '/login') {
-    return (
-      <html lang="es">
-        <body className="antialiased font-sans bg-slate-100 text-slate-900">
-          {children}
-        </body>
-      </html>
-    );
-  }
+  const userWithProfile = await getUserWithProfile();
+  const role = userWithProfile?.role;
 
   return (
-    <html lang="es" className="h-full" suppressHydrationWarning >
-      <body className="antialiased font-sans bg-slate-100 text-slate-900" suppressHydrationWarning >
-        <SidebarProvider>
-          <div className="flex min-h-screen">
-            <Sidebar />
-            <main className="flex-1 p-6 overflow-y-auto">
-              <Providers>
-                {children}
-              </Providers>
-            </main>
-          </div>
-        </SidebarProvider>
+    <html lang="es" className="h-full" suppressHydrationWarning>
+      <body className="antialiased font-sans bg-slate-100 text-slate-900" suppressHydrationWarning>
+        {/* Excluir login de layout */}
+        {userWithProfile ? (
+          <SidebarProvider>
+            <div className="flex min-h-screen">
+              <Sidebar role={role} />
+              <main className="flex-1 p-6 overflow-y-auto">
+                <Providers>
+                  {children}
+                </Providers>
+              </main>
+            </div>
+          </SidebarProvider>
+        ) : (
+          // Si no hay sesión activa, se renderiza el contenido sin sidebar (ej: login)
+          <div className="min-h-screen">{children}</div>
+        )}
       </body>
     </html>
   );

@@ -9,7 +9,7 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import React from "react";
-import { signOutAction } from "@/app/(auth)/auth";
+import { signOutAction } from "@/lib/auth";
 
 interface NavItem {
   href: string;
@@ -41,13 +41,8 @@ export const sidebarNavigation: NavSection[] = [
   },
   {
     title: "Table Administration",
-    items: [{ href: "/admin", label: "Dashboard", icon: ChartBarIcon }],
+    items: [{ href: "/Admin", label: "Dashboard", icon: ChartBarIcon }],
   },
-  {
-    title: "Inventory",
-    items: [{ href: "/almacen", label: "Dashboard", icon: ChartBarIcon }],
-  },
-
   {
     title: "Sesión",
     items: [

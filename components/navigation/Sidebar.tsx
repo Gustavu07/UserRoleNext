@@ -8,7 +8,11 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
-export function Sidebar() {
+interface SidebarProps {
+  role?: string; // Recibimos el rol desde RootLayout
+}
+
+export function Sidebar({ role }: SidebarProps) {
   const { collapsed, setCollapsed, setHovered, isOpen } = useSidebar();
   const pathname = usePathname();
   const [darkMode, setDarkMode] = useState(false);
@@ -21,6 +25,15 @@ export function Sidebar() {
       root.classList.remove('dark');
     }
   }, [darkMode]);
+
+  // 🔐 Filtramos navegación según el rol
+  const filteredNavigation = sidebarNavigation.filter((section) => {
+    // Ocultar sección 'Table Administration' si el rol no es superadmin
+    if (section.title === 'Table Administration') {
+      return role === 'superadmin';
+    }
+    return true;
+  });
 
   return (
     <aside
@@ -49,7 +62,7 @@ export function Sidebar() {
 
       {/* NAVEGACIÓN */}
       <nav className="px-2 overflow-y-auto flex-1">
-        {sidebarNavigation.map((section, i) => (
+        {filteredNavigation.map((section, i) => (
           <div key={i} className="mb-4">
             {!collapsed && (
               <h4 className="text-xs text-gray-400 dark:text-gray-500 uppercase px-2 mb-2">
