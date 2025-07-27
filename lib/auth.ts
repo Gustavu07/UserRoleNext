@@ -13,7 +13,6 @@ export type RolUsuario =
   | "contabilidad"
   | "nuevo";
 
-// 👉 Tipo de usuario extendido con perfil
 export interface UsuarioConRol {
   user: User;
   role: RolUsuario;
@@ -22,13 +21,12 @@ export interface UsuarioConRol {
   phone: string | null;
 }
 
-// 🔐 Obtener el usuario logueado junto a su perfil extendido
 export const getUserWithProfile = async (): Promise<UsuarioConRol | null> => {
   const supabase = await createClient();
 
   const { data: authData, error: authError } = await supabase.auth.getUser();
   if (authError || !authData?.user) {
-    console.warn("⚠️ No se encontró sesión activa o hubo error");
+    console.warn(" No se encontró sesión activa o hubo error");
     return null;
   }
 
@@ -41,7 +39,7 @@ export const getUserWithProfile = async (): Promise<UsuarioConRol | null> => {
     .single();
 
   if (profileError || !profile) {
-    console.error("❌ Error al obtener el perfil extendido:", profileError);
+    console.error(" Error al obtener el perfil extendido:", profileError);
     return null;
   }
 
@@ -54,7 +52,6 @@ export const getUserWithProfile = async (): Promise<UsuarioConRol | null> => {
   };
 };
 
-// 🔓 Login
 export const logInAction = async (formData: FormData) => {
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
@@ -66,18 +63,17 @@ export const logInAction = async (formData: FormData) => {
   });
 
   if (error) {
-    console.error("❌ Login error:", error);
+    console.error(" Login error:", error);
     return encodedRedirect("error", "/login", error.message);
   }
 
-  console.log("✅ LOGIN SUCCESS");
-  console.log("👤 Usuario:", data.user);
-  console.log("🔐 Access Token:", data.session?.access_token);
+  console.log(" LOGIN SUCCESS");
+  console.log(" Usuario:", data.user);
+  console.log(" Access Token:", data.session?.access_token);
 
   return redirect("/");
 };
 
-// 🔒 Logout
 export const signOutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
