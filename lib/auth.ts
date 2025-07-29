@@ -3,25 +3,9 @@
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";
 import { redirect } from "next/navigation";
-import { User } from "@supabase/supabase-js";
+import { Profile, RolUsuario } from "@/types/index";
 
-// 👉 Enum de roles válidos
-export type RolUsuario =
-  | "superadmin"
-  | "almacen"
-  | "ventas"
-  | "contabilidad"
-  | "nuevo";
-
-export interface UsuarioConRol {
-  user: User;
-  role: RolUsuario;
-  isActive: boolean;
-  fullName: string | null;
-  phone: string | null;
-}
-
-export const getUserWithProfile = async (): Promise<UsuarioConRol | null> => {
+export const getUserWithProfile = async (): Promise<Profile | null> => {
   const supabase = await createClient();
 
   const { data: authData, error: authError } = await supabase.auth.getUser();
@@ -67,7 +51,6 @@ export const logInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/login", error.message);
   }
 
-  console.log(" LOGIN SUCCESS");
   console.log(" Usuario:", data.user);
   console.log(" Access Token:", data.session?.access_token);
 
@@ -78,6 +61,6 @@ export const signOutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
 
-  console.log("👋 Usuario deslogueado correctamente");
+  console.log(" Usuario deslogueado correctamente");
   return redirect("/login");
 };

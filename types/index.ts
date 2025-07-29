@@ -1,16 +1,34 @@
-export type UserRole =
+import { User } from "@supabase/supabase-js";
+
+export type RolUsuario =
   | "superadmin"
   | "almacen"
   | "ventas"
   | "contabilidad"
   | "nuevo";
 
-//user
-export interface Profile {
-  id: string;
+export interface ProfileDB {
+  // Este representa lo que viene desde la tabla 'profiles'
+  id: string; // igual al user.id
   full_name: string | null;
   phone: string | null;
-  role: UserRole | null;
-  created_at: string;
-  is_active: boolean | null;
+  role: RolUsuario;
+  is_active: boolean;
+}
+
+export interface Profile {
+  user: User;
+  role: RolUsuario;
+  isActive: boolean;
+  fullName: string | null;
+  phone: string | null;
+}
+
+export interface CreateUserPayload {
+  email: string;
+  password: string;
+  fullName: string;
+  phone?: string;
+  role: RolUsuario;
+  isActive: boolean;
 }
