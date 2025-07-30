@@ -6,7 +6,6 @@ import { UserForm } from '@/components/users/UserForm';
 import { UserTable } from '@/components/users/UserTable';
 
 export default function UsersPage() {
-  // Guardamos el usuario seleccionado con email
   const [selectedUser, setSelectedUser] = useState<(ProfileDB & { email: string }) | null>(null);
   const [showForm, setShowForm] = useState(false);
 

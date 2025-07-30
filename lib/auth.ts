@@ -51,9 +51,6 @@ export const logInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/login", error.message);
   }
 
-  console.log(" Usuario:", data.user);
-  console.log(" Access Token:", data.session?.access_token);
-
   return redirect("/");
 };
 

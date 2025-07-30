@@ -27,7 +27,6 @@ export default async function RootLayout({
             </div>
           </SidebarProvider>
         ) : (
-          // Si no hay sesión activa, se renderiza el contenido sin sidebar (ej: login)
           <div className="min-h-screen">{children}</div>
         )}
       </body>

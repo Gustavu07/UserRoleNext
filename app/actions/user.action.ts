@@ -7,14 +7,18 @@ export async function getAllUsers() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("profiles")
-    .select("id, role, is_active, full_name, phone");
+    .select("id, role, is_active, full_name, phone, auth_users(email)")
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error("Error al obtener usuarios:", error.message);
     return [];
   }
 
-  return data;
+  return data.map((profile: any) => ({
+    ...profile,
+    email: profile.auth_users?.email ?? "",
+  }));
 }
 
 export async function createUser(input: {
