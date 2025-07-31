@@ -12,10 +12,11 @@ import type {
   RolUsuario,
   ProfileDB,
   CreateUserPayload,
+  ProfileWithEmail,
 } from "@/types";
 
 export function useUserData() {
-  const getUsers = useCallback(async (): Promise<ProfileDB[]> => {
+  const getUsers = useCallback(async (): Promise<ProfileWithEmail[]> => {
     const data = await getAllUsers();
     return data ?? [];
   }, []);

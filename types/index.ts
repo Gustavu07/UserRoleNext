@@ -32,3 +32,12 @@ export interface CreateUserPayload {
   role: RolUsuario;
   isActive: boolean;
 }
+
+export interface ProfileWithEmail {
+  id: string;
+  email: string;
+  full_name: string | null;
+  phone: string | null;
+  role: RolUsuario;
+  is_active: boolean;
+}

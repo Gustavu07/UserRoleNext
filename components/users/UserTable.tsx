@@ -1,12 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import type { ProfileDB } from '@/types';
+import type { ProfileWithEmail } from '@/types';
 import { useUserData } from '@/utils/hooks/useUserData';
-
-export interface ProfileWithEmail extends ProfileDB {
-  email: string;
-}
 
 interface UserTableProps {
   onEdit: (user: ProfileWithEmail) => void;

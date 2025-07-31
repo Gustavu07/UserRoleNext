@@ -1,24 +1,19 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { RolUsuario } from "@/types";
+import { RolUsuario, ProfileWithEmail } from "@/types";
 
-export async function getAllUsers() {
+export async function getAllUsers(): Promise<ProfileWithEmail[]> {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("id, role, is_active, full_name, phone, auth_users(email)")
-    .order("created_at", { ascending: false });
+
+  const { data, error } = await supabase.rpc("get_all_users_with_email");
 
   if (error) {
     console.error("Error al obtener usuarios:", error.message);
     return [];
   }
 
-  return data.map((profile: any) => ({
-    ...profile,
-    email: profile.auth_users?.email ?? "",
-  }));
+  return data || [];
 }
 
 export async function createUser(input: {
