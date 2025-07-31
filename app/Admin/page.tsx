@@ -32,6 +32,7 @@ export default function UsersPage() {
   // Función para convertir al formato que espera UserForm
   function convert(profile: ProfileDB & { email: string }): CreateUserPayload {
     return {
+      id: profile.id,
       email: profile.email,
       password: "", // Vacío en edición
       fullName: profile.full_name ?? "",

@@ -50,7 +50,7 @@ export function UserTable({ onEdit, onAddNew }: UserTableProps) {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="p-4 border rounded-md">
+    <div className="p-4 border rounded-md w-full">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-bold">Usuarios</h2>
         <button
@@ -61,16 +61,16 @@ export function UserTable({ onEdit, onAddNew }: UserTableProps) {
         </button>
       </div>
 
-      <table className="w-full table-auto border-collapse border border-gray-200">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border px-4 py-2">ID</th>
-            <th className="border px-4 py-2">Correo electrónico</th>
-            <th className="border px-4 py-2">Nombre Completo</th>
-            <th className="border px-4 py-2">Teléfono</th>
-            <th className="border px-4 py-2">Rol</th>
-            <th className="border px-4 py-2">Activo</th>
-            <th className="border px-4 py-2">Acciones</th>
+      <table className="w-full table-auto border-collapse border border-gray-300 text-sm">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="border px-2 py-1">UID</th>
+            <th className="border px-2 py-1">Correo</th>
+            <th className="border px-2 py-1">Nombre</th>
+            <th className="border px-2 py-1">Teléfono</th>
+            <th className="border px-2 py-1">Rol</th>
+            <th className="border px-2 py-1">Activo</th>
+            <th className="border px-2 py-1">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -81,16 +81,22 @@ export function UserTable({ onEdit, onAddNew }: UserTableProps) {
               </td>
             </tr>
           ) : (
-            <>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td className="border px-4 py-2">{user.id}</td>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">{user.full_name ?? '-'}</td>
-                  <td className="border px-4 py-2">{user.phone ?? '-'}</td>
-                  <td className="border px-4 py-2">{user.role}</td>
-                  <td className="border px-4 py-2">{user.is_active ? 'Sí' : 'No'}</td>
-                  <td className="border px-4 py-2 flex gap-2">
+            users.map((user) => (
+              <tr key={user.id}>
+                <td className="border px-2 py-1 truncate max-w-[160px]" title={user.id}>
+                  {user.id}
+                </td>
+                <td className="border px-2 py-1 truncate max-w-[160px]" title={user.email}>
+                  {user.email}
+                </td>
+                <td className="border px-2 py-1 truncate max-w-[140px]" title={user.full_name ?? ''}>
+                  {user.full_name ?? '-'}
+                </td>
+                <td className="border px-2 py-1">{user.phone ?? '-'}</td>
+                <td className="border px-2 py-1 capitalize">{user.role}</td>
+                <td className="border px-2 py-1 text-center">{user.is_active ? 'Sí' : 'No'}</td>
+                <td className="border px-2 py-1">
+                  <div className="flex gap-2 justify-center flex-wrap text-xs">
                     <button
                       onClick={() => onEdit(user)}
                       className="text-blue-600 hover:underline"
@@ -103,10 +109,10 @@ export function UserTable({ onEdit, onAddNew }: UserTableProps) {
                     >
                       Eliminar
                     </button>
-                  </td>
-                </tr>
-              ))}
-            </>
+                  </div>
+                </td>
+              </tr>
+            ))
           )}
         </tbody>
       </table>

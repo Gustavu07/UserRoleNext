@@ -24,14 +24,15 @@ export interface Profile {
   phone: string | null;
 }
 
-export interface CreateUserPayload {
+export type CreateUserPayload = {
+  id?: string; // <--- este campo es opcional
   email: string;
   password: string;
   fullName: string;
   phone?: string;
   role: RolUsuario;
   isActive: boolean;
-}
+};
 
 export interface ProfileWithEmail {
   id: string;
